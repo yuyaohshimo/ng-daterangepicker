@@ -35,7 +35,7 @@ dates = {
   start: moment(), // today
   end: moment().add(1, 'days') // tomorrow
 };
-monthNumbers = 3; // show 5 months
+monthNumbers = 3; // show 3 months
 rangeOptions = [
   {
     label: 'Today',
