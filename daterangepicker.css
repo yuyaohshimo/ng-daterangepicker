@@ -1,0 +1,94 @@
+.daterangepicker {
+  position: relative;
+}
+
+.daterangepicker__input {
+  min-width: 350px;
+}
+
+.daterangepicker__dropdown:before {
+  position: absolute;
+  top: -16px;
+  left: 10px;
+  content: '';
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 15px solid #ccc;
+}
+
+.daterangepicker__dropdown:after {
+  position: absolute;
+  top: -14px;
+  left: 10px;
+  content: '';
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 15px solid #fff;
+}
+
+.daterangepicker__dropdown {
+  position: absolute;
+  top: 35px;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.daterangepicker__header {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.daterangepicker__aside {
+  float: right;
+  width: 160px;
+  padding: 10px;
+}
+
+.daterangepicker__aside button {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.daterangepicker__prev {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.daterangepicker__next {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.daterangepicker__month {
+  margin: 0;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.daterangepicker__calendars {
+  position: relative;
+  padding: 10px;
+  border: 1px solid #ccc;
+  overflow: hidden;
+}
+
+.daterangepicker__calendar {
+  display: inline-block;
+  padding: 5px;
+}
+
+.daterangepicker_state_selected {
+  background-color: #3498db;
+  color: #fff;
+}
+
+.daterangepicker__footer {
+  padding: 10px;
+}
