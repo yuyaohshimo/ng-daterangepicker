@@ -53,6 +53,9 @@
           });
         }
 
+        // Style
+        angular.element('.daterangepicker__dropdown').css({ top: angular.element('.daterangepicker__input')[0].offsetHeight + 'px' });
+
         _changeTime = function(target, h, m, s) {
           return target.hour(h).minute(m).second(s);
         };

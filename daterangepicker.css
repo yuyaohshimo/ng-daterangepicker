@@ -3,31 +3,7 @@
 }
 
 .daterangepicker__input {
-  min-width: 350px;
-}
-
-.daterangepicker__dropdown:before {
-  position: absolute;
-  top: -16px;
-  left: 10px;
-  content: '';
-  width: 0;
-  height: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 15px solid #ccc;
-}
-
-.daterangepicker__dropdown:after {
-  position: absolute;
-  top: -14px;
-  left: 10px;
-  content: '';
-  width: 0;
-  height: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 15px solid #fff;
+  cursor: pointer;
 }
 
 .daterangepicker__dropdown {
@@ -35,6 +11,8 @@
   top: 35px;
   padding: 10px;
   border: 1px solid #ccc;
+  background-color: #fff;
+  z-index: 10;
 }
 
 .daterangepicker__header {
