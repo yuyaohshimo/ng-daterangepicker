@@ -9,9 +9,10 @@
   "authors": [
     "yuyaohshimo <yohshimo@coiney.com>"
   ],
-  "description": "Data range pocker for Angular.js",
+  "description": "Date range picker for Angular.js",
   "keywords": [
-    "daterangepicker"
+    "daterangepicker",
+    "date range picker"
   ],
   "license": "MIT",
   "ignore": [
