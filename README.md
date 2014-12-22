@@ -20,7 +20,7 @@ You should write script and link tag in HTML header:
 ```
 You should write `date-range-picker` tag as an angular directive:
 ```html
-<date-range-picker ng-model="dates" locale="locale" month-numbers="monthNumbers" range-options="rangeOptions"></date-range-picker>
+<date-range-picker ng-model="dates" locale="locale" month-numbers="monthNumbers" range-options="rangeOptions" format="format"></date-range-picker>
 ```
 
 ## Options
@@ -28,6 +28,7 @@ You should write `date-range-picker` tag as an angular directive:
   - `monthNumbers`: the number of showing month
   - `rangeOptions`: add custom range button
   - `locale`: set locale
+  - `format`: set format to display date.
 
 Example:
 ```javascript
@@ -49,6 +50,10 @@ rangeOptions = [
 locale = {
   month: 'JAN_FEB_MAR_APR_MAY_JUN_JULY_AUG_SEPT_OCT_NOV_DEC'.split('_'),
   weekdaysShort: 'SUN_MON_TUE_WED_THU_FRI_SAT'.split('_')
+};
+format = {
+  date: 'YYYY/MM/DD',
+  to: '~'
 };
 ```
 
