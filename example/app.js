@@ -28,4 +28,8 @@ angular.module('test').controller('TestCtrl', function($scope){
     date: 'YYYY/MM/DD',
     to: '~'
   };
+  $scope.applyDateRange = function(start, end) {
+    console.log(start);
+    console.log(end);
+  };
 });
