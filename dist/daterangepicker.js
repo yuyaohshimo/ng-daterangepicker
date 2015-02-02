@@ -13,9 +13,9 @@
     return {
       restrict: 'AE',
       replace: true,
-      template: '<div ng-click="$event.stopPropagation()" class="daterangepicker"><input type="text" readonly="" ng-click="toggleDropdown()" ng-show="!!model" value="{{start.format(format.date ? format.date : \'YYYY/MM/DD\')}} {{format.to ? format.to : \'-\'}} {{end.format(format.date ? format.date : \'YYYY/MM/DD\')}}" class="daterangepicker__input"/><div ng-show="showDropdown" class="daterangepicker__dropdown"><div class="daterangepicker__header"><div class="daterangepicker__aside"><button ng-click="applyRange(rangeOption.value)" ng-repeat="rangeOption in rangeOptions">{{rangeOption.label}}</button></div><div class="daterangepicker__calendars"><button ng-click="prev()" class="daterangepicker__prev">&lt;</button><button ng-click="next()" class="daterangepicker__next">&gt;</button><div ng-repeat="calendarDaysArray in calendars" class="daterangepicker__calendar"><h4 ng-click="changeSelect(months[$index].value)" class="daterangepicker__month">{{months[$index].name}}</h4><table><thead><tr><th ng-repeat="week in weeks">{{week}}</th></tr></thead><tbody><tr ng-repeat="days in calendarDaysArray"><td ng-repeat="day in days track by $index" ng-class="{ \'daterangepicker_state_selected\': day.selected }" ng-click="select($parent.$parent.$index, day)">{{day.value}}</td></tr></tbody></table></div></div></div><div class="daterangepicker__footer"><button ng-click="ok()" class="daterangepicker__apply">OK</button><button ng-click="cancel()" class="daterangepicker__cancel">CANCEL</button></div></div></div>',
+      template: '<div ng-click="$event.stopPropagation()" class="daterangepicker"><input type="text" readonly="" ng-click="toggleDropdown()" ng-show="!!dates" value="{{start.format(format.date ? format.date : \'YYYY/MM/DD\')}} {{format.to ? format.to : \'-\'}} {{end.format(format.date ? format.date : \'YYYY/MM/DD\')}}" class="daterangepicker__input"/><div ng-show="showDropdown" class="daterangepicker__dropdown"><div class="daterangepicker__header"><div class="daterangepicker__aside"><button ng-click="applyRange(rangeOption.value)" ng-repeat="rangeOption in rangeOptions">{{rangeOption.label}}</button></div><div class="daterangepicker__calendars"><button ng-click="prev()" class="daterangepicker__prev">&lt;</button><button ng-click="next()" class="daterangepicker__next">&gt;</button><div ng-repeat="calendarDaysArray in calendars" class="daterangepicker__calendar"><h4 ng-click="changeSelect(months[$index].value)" class="daterangepicker__month">{{months[$index].name}}</h4><table><thead><tr><th ng-repeat="week in weeks">{{week}}</th></tr></thead><tbody><tr ng-repeat="days in calendarDaysArray"><td ng-repeat="day in days track by $index" ng-class="{ \'daterangepicker_state_selected\': day.selected }" ng-click="select($parent.$parent.$index, day)">{{day.value}}</td></tr></tbody></table></div></div></div><div class="daterangepicker__footer"><button ng-click="ok()" class="daterangepicker__apply">OK</button><button ng-click="cancel()" class="daterangepicker__cancel">CANCEL</button></div></div></div>',
       scope: {
-        model: '=ngModel',
+        dates: '=',
         locale: '=',
         monthNumbers: '=',
         rangeOptions: '=',
@@ -35,16 +35,16 @@
         var currentMonth = 0;
         var selectSteps = [];
         $scope.showDropdown = false;
-        $scope.start = $scope.model.start;
-        $scope.end = $scope.model.end;
+        $scope.start = $scope.dates.start;
+        $scope.end = $scope.dates.end;
         $scope.calendars = [];
         $scope.months = [];
 
         // Window event
         angular.element($window).bind('click', function() {
           if (!$scope.showDropdown) return;
-          $scope.start = $scope.model.start;
-          $scope.end = $scope.model.end;
+          $scope.start = $scope.dates.start;
+          $scope.end = $scope.dates.end;
           _hideCalendar();
           $scope.$apply();
         });
@@ -179,12 +179,15 @@
 
         $scope.ok = function() {
           _hideCalendar();
-          $scope.applyDateRange();
+          $scope.applyDateRange({
+            start: $scope.start,
+            end: $scope.end
+          });
         };
 
         $scope.cancel = function() {
-          $scope.start = $scope.model.start;
-          $scope.end = $scope.model.end;
+          $scope.start = $scope.dates.start;
+          $scope.end = $scope.dates.end;
           _hideCalendar();
         };
 

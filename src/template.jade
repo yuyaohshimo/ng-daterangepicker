@@ -1,5 +1,5 @@
 .daterangepicker(ng-click="$event.stopPropagation()")
-  input.daterangepicker__input(type="text", readonly="", ng-click="toggleDropdown()", ng-show="!!model", value="{{start.format(format.date ? format.date : 'YYYY/MM/DD')}} {{format.to ? format.to : '-'}} {{end.format(format.date ? format.date : 'YYYY/MM/DD')}}")
+  input.daterangepicker__input(type="text", readonly="", ng-click="toggleDropdown()", ng-show="!!dates", value="{{start.format(format.date ? format.date : 'YYYY/MM/DD')}} {{format.to ? format.to : '-'}} {{end.format(format.date ? format.date : 'YYYY/MM/DD')}}")
   .daterangepicker__dropdown(ng-show="showDropdown")
     .daterangepicker__header
       .daterangepicker__aside

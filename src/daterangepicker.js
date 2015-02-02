@@ -15,7 +15,7 @@
       replace: true,
       template: '{html}',
       scope: {
-        model: '=ngModel',
+        dates: '=',
         locale: '=',
         monthNumbers: '=',
         rangeOptions: '=',
@@ -35,16 +35,16 @@
         var currentMonth = 0;
         var selectSteps = [];
         $scope.showDropdown = false;
-        $scope.start = $scope.model.start;
-        $scope.end = $scope.model.end;
+        $scope.start = $scope.dates.start;
+        $scope.end = $scope.dates.end;
         $scope.calendars = [];
         $scope.months = [];
 
         // Window event
         angular.element($window).bind('click', function() {
           if (!$scope.showDropdown) return;
-          $scope.start = $scope.model.start;
-          $scope.end = $scope.model.end;
+          $scope.start = $scope.dates.start;
+          $scope.end = $scope.dates.end;
           _hideCalendar();
           $scope.$apply();
         });
@@ -179,12 +179,15 @@
 
         $scope.ok = function() {
           _hideCalendar();
-          $scope.applyDateRange();
+          $scope.applyDateRange({
+            start: $scope.start,
+            end: $scope.end
+          });
         };
 
         $scope.cancel = function() {
-          $scope.start = $scope.model.start;
-          $scope.end = $scope.model.end;
+          $scope.start = $scope.dates.start;
+          $scope.end = $scope.dates.end;
           _hideCalendar();
         };
 
