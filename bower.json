@@ -2,8 +2,8 @@
   "name": "ng-daterangepicker",
   "version": "0.0.3",
   "main": [
-    "daterangepicker.css",
-    "daterangepicker.js"
+    "./dist/daterangepicker.css",
+    "./dist/daterangepicker.js"
   ],
   "homepage": "https://github.com/yuyaohshimo/ng-daterangepicker",
   "authors": [

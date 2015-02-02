@@ -1,0 +1,25 @@
+.daterangepicker(ng-click="$event.stopPropagation()")
+  input.daterangepicker__input(type="text", readonly="", ng-click="toggleDropdown()", ng-show="!!model", value="{{start.format(format.date ? format.date : 'YYYY/MM/DD')}} {{format.to ? format.to : '-'}} {{end.format(format.date ? format.date : 'YYYY/MM/DD')}}")
+  .daterangepicker__dropdown(ng-show="showDropdown")
+    .daterangepicker__header
+      .daterangepicker__aside
+        button(ng-click="applyRange(rangeOption.value)", ng-repeat="rangeOption in rangeOptions")
+            | {{rangeOption.label}}
+      .daterangepicker__calendars
+        button.daterangepicker__prev(ng-click="prev()") &lt;
+        button.daterangepicker__next(ng-click="next()") &gt;
+        .daterangepicker__calendar(ng-repeat="calendarDaysArray in calendars")
+          h4.daterangepicker__month(ng-click="changeSelect(months[$index].value)")
+            | {{months[$index].name}}
+          table
+            thead
+              tr
+                th(ng-repeat="week in weeks")
+                  | {{week}}
+            tbody
+              tr(ng-repeat="days in calendarDaysArray")
+                td(ng-repeat="day in days track by $index", ng-class="{ 'daterangepicker_state_selected': day.selected }", ng-click="select($parent.$parent.$index, day)")
+                  | {{day.value}}
+    .daterangepicker__footer
+      button.daterangepicker__apply(ng-click="ok()") OK
+      button.daterangepicker__cancel(ng-click="cancel()") CANCEL
