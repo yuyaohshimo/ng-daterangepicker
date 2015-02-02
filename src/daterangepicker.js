@@ -42,6 +42,8 @@
         // Window event
         angular.element($window).bind('click', function() {
           if (!$scope.showDropdown) return;
+          $scope.start = $scope.model.start;
+          $scope.end = $scope.model.end;
           _hideCalendar();
           $scope.$apply();
         });
