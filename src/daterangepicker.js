@@ -19,7 +19,8 @@
         locale: '=',
         monthNumbers: '=',
         rangeOptions: '=',
-        format: '='
+        format: '=',
+        applyDateRange: '&'
       },
       link: function($scope, element, attrs) {
         var _changeTime;
@@ -178,6 +179,7 @@
 
         $scope.ok = function() {
           _hideCalendar();
+          $scope.applyDateRange();
         };
 
         $scope.cancel = function() {
