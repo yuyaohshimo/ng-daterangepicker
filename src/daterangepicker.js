@@ -58,6 +58,9 @@
 
         $scope.onChangeSelect = function() {
           if ($scope.selectedOption.value === 'custom') { return; }
+          if ($scope.selectedOption.value === 'all') {
+            return _apply(true);
+          }
 
           // start
           $scope.start.value = $scope.selectedOption.start;
@@ -94,10 +97,18 @@
           $scope[type].show = !$scope[type].show;
         };
 
-        function _apply() {
+        function _apply(isAll) {
+          var start = $scope.start;
+          var end = $scope.end;
+
+          if (isAll) {
+            start = null;
+            end = null;
+          }
+
           $scope.applyDateRange({
-            start: $scope.start,
-            end: $scope.end
+            start: start,
+            end: end
           });
         }
 
