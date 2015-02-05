@@ -9,46 +9,22 @@
 (function() {
   angular.module('dateRangePicker', []);
 
-  angular.module('dateRangePicker').directive('dateRangePicker', ['$window', function($window) {
+  angular.module('dateRangePicker')
+  .directive('dateRangePicker', ['$window', function($window) {
     return {
       restrict: 'AE',
       replace: true,
-      template: '<div ng-click="$event.stopPropagation()" class="daterangepicker"><input type="text" readonly="" ng-click="toggleDropdown()" ng-show="!!dates" value="{{start.format(format.date ? format.date : \'YYYY/MM/DD\')}} {{format.to ? format.to : \'-\'}} {{end.format(format.date ? format.date : \'YYYY/MM/DD\')}}" class="daterangepicker__input"/><div ng-show="showDropdown" class="daterangepicker__dropdown"><div class="daterangepicker__header"><div class="daterangepicker__aside"><button ng-click="applyRange(rangeOption.value)" ng-repeat="rangeOption in rangeOptions">{{rangeOption.label}}</button></div><div class="daterangepicker__calendars"><button ng-click="prev()" class="daterangepicker__prev">&lt;</button><button ng-click="next()" class="daterangepicker__next">&gt;</button><div ng-repeat="calendarDaysArray in calendars" class="daterangepicker__calendar"><h4 ng-click="changeSelect(months[$index].value)" class="daterangepicker__month">{{months[$index].name}}</h4><table><thead><tr><th ng-repeat="week in weeks">{{week}}</th></tr></thead><tbody><tr ng-repeat="days in calendarDaysArray"><td ng-repeat="day in days track by $index" ng-class="{ \'daterangepicker_state_selected\': day.selected }" ng-click="select($parent.$parent.$index, day)">{{day.value}}</td></tr></tbody></table></div></div></div><div class="daterangepicker__footer"><button ng-click="ok()" class="daterangepicker__apply">OK</button><button ng-click="cancel()" class="daterangepicker__cancel">CANCEL</button></div></div></div>',
+      template: '<div ng-click="$event.stopPropagation()" class="daterangepicker"><div class="daterangepicker__option"><select ng-model="selectedOption" ng-options="option.label for option in options" ng-change="onChangeSelect()"></select></div><div ng-show="selectedOption.value === \'custom\'" class="daterangepicker__cutom"><div class="daterangepicker__start"><input ng-if="isMobile" type="date" ng-model="start.value._d" class="daterangepicker__input"/><input ng-if="!isMobile" type="text" ng-model="start.value" ng-click="toggleDropdown(\'start\')" readonly="" class="daterangepicker__input"/><div ng-show="start.show" ng-if="!isMobile" class="daterangepicker__dropdown"><button ng-click="onChangeMonth(\'start\', -1)" class="daterangepicker__prev">&lt;</button><button ng-click="onChangeMonth(\'start\', 1)" ng-if="start.month &lt; end.month" class="daterangepicker__next">&gt;</button><div class="daterangepicker__calendars"><h4 class="daterangepicker__year">{{ _moment.clone().month(start.month).format(\'YYYY\') }}</h4><h4 class="daterangepicker__month">{{ _moment.clone().month(start.month).format(\'MMMM\') }}</h4><table><thead><tr><th ng-repeat="week in weeks">{{ week }}</th></tr></thead><tbody><tr ng-repeat="week in start.days"><td ng-repeat="day in week" ng-class="{ disabled: day.disabled, selected: !day.disabled &amp;&amp; (start.value.month() === _moment.clone().month(start.month).month()) &amp;&amp; (day.value == start.value.format(\'D\')) }" ng-click="onSelectDay(\'start\', day, day.value, end.value.format(\'D\'))">{{ day.value }}</td></tr></tbody></table></div></div></div><div ng-bind="format.to" class="daterangepicker__to"></div><div class="daterangepicker__end"><input ng-if="isMobile" type="date" ng-model="end.value._d" class="daterangepicker__input"/><input ng-if="!isMobile" type="text" ng-model="end.value" ng-click="toggleDropdown(\'end\')" readonly="" class="daterangepicker__input"/><div ng-show="end.show" ng-if="!isMobile" class="daterangepicker__dropdown"><button ng-click="onChangeMonth(\'end\', -1)" ng-if="start.month &lt; end.month" class="daterangepicker__prev">&lt;</button><button ng-click="onChangeMonth(\'end\', 1)" class="daterangepicker__next">&gt;</button><div class="daterangepicker__calendars"><h4 class="daterangepicker__year">{{ _moment.clone().month(end.month).format(\'YYYY\') }}</h4><h4 class="daterangepicker__month">{{ _moment.clone().month(end.month).format(\'MMMM\') }}</h4><table><thead><tr><th ng-repeat="week in weeks">{{ week }}</th></tr></thead><tbody><tr ng-repeat="week in end.days"><td ng-repeat="day in week" ng-class="{ disabled: day.disabled, selected: !day.disabled &amp;&amp; (end.value.month() === _moment.clone().month(end.month).month()) &amp;&amp; (day.value == end.value.format(\'D\')) }" ng-click="onSelectDay(\'end\', day, end.value.format(\'D\'), day.value)">{{ day.value }}</td></tr></tbody></table></div></div></div></div></div>',
       scope: {
-        dates: '=',
+        isMobile: '=',
+        options: '=',
+        initialRange: '=',
         locale: '=',
-        monthNumbers: '=',
         rangeOptions: '=',
         format: '=',
         applyDateRange: '&'
       },
       link: function($scope, element, attrs) {
-        var _changeTime;
-        var _getDays;
-        var _getFirstWeek;
-        var _getCalendarDays;
-        var _getCalendarDaysArray;
-        var _createCalendar;
-        var _isSelectedDay;
-        var _markSelectedDay;
-        var _hideCalendar;
-        var currentMonth = 0;
-        var selectSteps = [];
-        $scope.showDropdown = false;
-        $scope.start = $scope.dates.start;
-        $scope.end = $scope.dates.end;
-        $scope.calendars = [];
-        $scope.months = [];
-
-        // Window event
-        angular.element($window).bind('click', function() {
-          if (!$scope.showDropdown) return;
-          $scope.start = $scope.dates.start;
-          $scope.end = $scope.dates.end;
-          _hideCalendar();
-          $scope.$apply();
-        });
-
         // Locale
         if ($scope.locale) {
           moment.locale('dateRangePicker', {
@@ -57,173 +33,128 @@
           });
         }
 
-        // Style
-        document.querySelectorAll('.daterangepicker__dropdown')[0].style.top = document.querySelectorAll('.daterangepicker__input')[0].offsetHeight + 'px';
+        // Window event
+        angular.element($window).bind('click', function() {
+          if (!$scope.start.show && !$scope.end.show) return;
+          $scope.start.show = $scope.end.show = false;
+          $scope.$apply();
+        });
 
-        _changeTime = function(target, h, m, s) {
-          return target.hour(h).minute(m).second(s);
+        $scope._moment = moment();
+        $scope.start = {
+          value: $scope.initialRange.start || moment(),
+          month: $scope.initialRange.start ? $scope.initialRange.start.month() : month(),
+          show: false
+        };
+        $scope.end = {
+          value: $scope.initialRange.end || moment(),
+          month: $scope.initialRange.end ? $scope.initialRange.end.month() : month(),
+          show: false
+        };
+        $scope.start.days = _getDaysPerWeek(_getMonth('start'));
+        $scope.end.days = _getDaysPerWeek(_getMonth('end'));
+        $scope.selectedOption = $scope.options[0];
+        $scope.weeks = moment.weekdaysShort();
+
+        $scope.onChangeSelect = function() {
+          if ($scope.selectedOption.value === 'custom') { return; }
+
+          // start
+          $scope.start.value = $scope.selectedOption.start;
+          $scope.start.month = $scope.start.value.month();
+          $scope.start.days = _getDaysPerWeek(_getMonth('start'));
+
+          // end
+          $scope.end.value = $scope.selectedOption.end;
+          $scope.end.month = $scope.end.value.month();
+          $scope.end.days = _getDaysPerWeek(_getMonth('end'));
+
+          _apply();
         };
 
-        _getDays =  function(month) {
-          var days = [];
+        $scope.onSelectDay = function(type, day, startDayValue, endDayValue) {
+          if (day.disabled) { return; }
+          if (!_isValidDay(startDayValue, endDayValue)) { return; }
 
-          var startDay = moment().startOf('month').add(month, 'month');
-          var endDay = moment().endOf('month').add(month, 'month');
-          var range = moment().range(startDay, endDay);
+          var month = $scope[type].month;
+          $scope[type].value = moment().month(month).date(day.value);
 
-          range.by('days', function(moment) {
-            days.push(moment);
-          });
+          $scope[type].show = false;
 
-          return days;
+          _apply();
         };
 
-        _getFirstDay = function(month) {
-          return moment().startOf('month').add(month, 'month').day();
+        $scope.onChangeMonth = function(type, addtionalMonth) {
+          $scope[type].month += addtionalMonth;
+          $scope[type].days = _getDaysPerWeek(_getMonth(type));
         };
 
-        _getCalendarDays = function(days, firstDay) {
-          var calendarDays = [];
-          days.forEach(function(day, idx) {
-            calendarDays.push({ value: idx + 1});
-          });
-          for (var i = 0; i < firstDay; i++) {
-            calendarDays.unshift({ value: '' });
-          }
-
-          return calendarDays;
+        $scope.toggleDropdown = function(type) {
+          $scope[_getOppositeType(type)].show = false;
+          $scope[type].show = !$scope[type].show;
         };
 
-        _getCalendarDaysArray = function(calendarDays) {
-          var calendarDaysArray = [];
-          for (var i = 0; calendarDays.length > 0; i++) {
-            calendarDaysArray.push(calendarDays.splice(0, 7));
-          }
-          return calendarDaysArray;
-        };
-
-        _createCalendar = function(month) {
-          var days = _getDays(month);
-          var firstDay = _getFirstDay(month);
-          var calendarDays = _getCalendarDays(days, firstDay);
-          var calendarDaysArray = _getCalendarDaysArray(calendarDays);
-
-          $scope.calendars.push(calendarDaysArray);
-        };
-
-        _createCalendars = function() {
-          $scope.months = [];
-          $scope.weeks = [];
-          $scope.calendars = [];
-
-          // Set week
-          $scope.weeks = moment.weekdaysShort();
-
-          // Set months and days
-          var month = 0 + currentMonth;
-          for (var i = month - Math.floor($scope.monthNumbers/2); i < month - Math.floor($scope.monthNumbers/2) + $scope.monthNumbers; i++) {
-            $scope.months.push({
-              name: moment().add(i, 'month').format('MMMM'),
-              value: i
-            });
-            _createCalendar(i);
-          }
-
-          // mark selected day
-          _markSelectedDay();
-        };
-
-        _markSelectedDay = function() {
-          if (!$scope.start) return;
-
-          var start = $scope.start;
-          var end = ($scope.end) ? $scope.end : moment(angular.extend({}, $scope.start));
-
-          if (start > end) {
-            var copyStart = start;
-            $scope.start = start = end;
-            $scope.end = end = copyStart;
-          }
-
-          var dayRange = moment().range(_changeTime(start, 0, 0, 0), _changeTime(end, 23, 59, 59));
-
-          $scope.months.forEach(function(month, idx) {
-            $scope.calendars[idx].forEach(function(weeks) {
-              weeks.forEach(function(day) {
-                if (!day.value) return;
-                day.selected = dayRange.contains(moment().startOf('month').add(month.value, 'month').add(day.value - 1, 'day').hour(12).minute(0).second(0));
-              });
-            });
-          });
-        };
-
-        _hideCalendar = function() {
-          selectSteps = [];
-          _markSelectedDay();
-          $scope.showDropdown = false;
-        };
-
-        $scope.toggleDropdown = function() {
-          $scope.showDropdown = !$scope.showDropdown;
-        };
-
-        $scope.prev = function() {
-          currentMonth--;
-          _createCalendars();
-        };
-
-        $scope.next = function() {
-          currentMonth++;
-          _createCalendars();
-        };
-
-        $scope.ok = function() {
-          _hideCalendar();
+        function _apply() {
           $scope.applyDateRange({
             start: $scope.start,
             end: $scope.end
           });
-        };
+        }
 
-        $scope.cancel = function() {
-          $scope.start = $scope.dates.start;
-          $scope.end = $scope.dates.end;
-          _hideCalendar();
-        };
+        function _isValidDay(startDayValue, endDayValue) {
+          return moment().clone().month($scope.start.month).day(startDayValue) <= moment().clone().month($scope.end.month).day(endDayValue);
+        }
 
-        $scope.applyRange = function(range) {
-          selectSteps = ['start', 'end'];
-          $scope.start = range.start;
-          $scope.end = range.end;
-          _markSelectedDay();
-        };
+        function _getOppositeType(type) {
+          return (type === 'start') ? 'end' : 'start';
+        }
 
-        $scope.select = function(monthIndex, day) {
-          if (day.selected || selectSteps.length === 2) {
-            $scope.start = null;
-            $scope.end = null;
-            selectSteps = [];
+        function _getDaysPerWeek(days) {
+          var _1w = 7;
+          var daysPerWeek = [];
+
+          for(var i = 0; i < Math.ceil(days.length / _1w); i++) {
+            var j = i * _1w;
+            daysPerWeek.push(days.slice(j, j + _1w));
+          }
+          return daysPerWeek;
+        }
+
+        function _getMonth(type) {
+          var month = $scope[type].month;
+          
+          var prevDays = moment().month(month).startOf('month').day();
+          var presentDays = moment().month(month).endOf('month').date();
+          var nextDays = 6 - moment().month(month).endOf('month').day();
+          var prevLastDay = moment().month(month - 1).endOf('month').format('D');
+          var days = [];
+
+          // prev days
+          while (prevDays > 0) {
+            days.push({
+              value: prevLastDay - prevDays + 1,
+              disabled: true
+            });
+            prevDays--;
           }
 
-          switch (selectSteps.length) {
-            case 0:
-              $scope.start = moment().startOf('month').add($scope.months[monthIndex].value, 'month').add(day.value - 1, 'day');
-              $scope.end = moment().startOf('month').add($scope.months[monthIndex].value, 'month').add(day.value - 1, 'day');
-              selectSteps.push('start');
-              break;
-            case 1:
-              $scope.end = moment().startOf('month').add($scope.months[monthIndex].value, 'month').add(day.value - 1, 'day');
-              selectSteps.push('end');
-              break;
-            default:
-              break;
+          // present days
+          for (var i = 1; i <= presentDays; i++) {
+            days.push({
+              value: i,
+              disabled: false
+            });
           }
-          _markSelectedDay();
 
-        };
-
-        // create calendars
-        _createCalendars();
+          // next days
+          for (var j = 1; j <= nextDays; j++) {
+            days.push({
+              value: j,
+              disabled: true
+            });
+          }
+          return days;
+        }
       }
     };
   }]);

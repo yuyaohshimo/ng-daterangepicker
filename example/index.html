@@ -3,13 +3,13 @@
   <head>
     <script type="text/javascript" src="../bower_components/angular/angular.js"></script>
     <script type="text/javascript" src="../bower_components/moment/moment.js"></script>
-    <script type="text/javascript" src="../bower_components/moment-range/lib/moment-range.js"></script>
     <script type="text/javascript" src="../dist/daterangepicker.js"></script>
     <link rel="stylesheet" type="text/css" href="../dist/daterangepicker.css"/>
   </head>
   <body ng-app="test">
     <div ng-controller="TestCtrl">
-    <date-range-picker dates="dates" locale="locale" month-numbers="monthNumbers" range-options="rangeOptions" format="format" apply-date-range="applyDateRange(start, end)"></date-range-picker>
+    <input type="checkbox" ng-model="isMobile"> isMobile: {{!!isMobile}}
+    <date-range-picker is-mobile="isMobile" options="options" initial-range="initialRange" start="start" end="end" locale="locale" format="format" apply-date-range="applyDateRange(start, end)"></date-range-picker>
     <script type="text/javascript" src="app.js"></script>
   </body>
 </html>
