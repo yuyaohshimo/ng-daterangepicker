@@ -38,6 +38,7 @@ options = [
     label: 'Custom',
     value: 'custom'
   },
+  // if you want to set all range option, put all
   {
     label: 'All',
     value: 'all'
