@@ -14,43 +14,60 @@ You should write script and link tag in HTML header:
 ```html
 <script type="text/javascript" src="angular.js"></script>
 <script type="text/javascript" src="moment.js"></script>
-<script type="text/javascript" src="moment-range.js"></script>
 <script type="text/javascript" src="daterangepicker.js"></script>
 <link rel="stylesheet" type="text/css" href="daterangepicker.css"/>
 ```
 You should write `date-range-picker` tag as an angular directive:
 ```html
-<date-range-picker dates="dates" locale="locale" month-numbers="monthNumbers" range-options="rangeOptions" format="format" applyDateRange="applyDateRange(start, end)"></date-range-picker>
+<date-range-picker is-mobile="isMobile" options="options" initial-range="initialRange" start="start" end="end" locale="locale" format="format" apply-date-range="applyDateRange(start, end)"></date-range-picker>
 ```
 
 ## Options
-  - `dates`: initial range
-  - `monthNumbers`: the number of showing month
-  - `rangeOptions`: add custom range button
-  - `locale`: set locale
-  - `format`: set format to display date.
-  - `applyDateRange`: callback function when ok button clicks.
+  - `is-mobile`: if you want to use a browser's calendar, set `true`
+  - `options`: range options
+  - `initial-range`: initial range
+  - `locale`: locale for `moment`
+  - `format`: format to display date
+  - `apply-date-range`: callback function
 
 Example:
 ```javascript
-dates = {
+options = [
+  // if you want to set date with calendar, put custom
+  {
+    label: 'Custom',
+    value: 'custom'
+  },
+  {
+    label: 'All',
+    value: 'all'
+  },
+  {
+    label: 'Today',
+    value:'today',
+    start: moment(),
+    end: moment()
+  },
+  {
+    label: 'This week',
+    value:'thisWeek',
+    start: moment().startOf('week'),
+    end: moment().endOf('week')
+  },
+  {
+    label: 'This month',
+    value:'thisMonth',
+    start: moment().startOf('month'),
+    end: moment().endOf('month')
+  }
+];
+initialRange = {
   start: moment(), // today
   end: moment().add(1, 'days') // tomorrow
 };
-monthNumbers = 3; // show 3 months
-rangeOptions = [
-  {
-    label: 'Today',
-    value: moment().range(moment(), moment())
-  },
-  {
-    label: 'This Week',
-    value: moment().range(moment().startOf('week'), moment().endOf('week'))
-  }
-];
 locale = {
-  month: 'JAN_FEB_MAR_APR_MAY_JUN_JULY_AUG_SEPT_OCT_NOV_DEC'.split('_'),
-  weekdaysShort: 'SUN_MON_TUE_WED_THU_FRI_SAT'.split('_')
+  months : '1月_2月_3月_4月_5月_6月_7月_8月_9月_10月_11月_12月'.split('_'),
+  weekdaysShort: '日_月_火_水_木_金_土'.split('_')
 };
 format = {
   date: 'YYYY/MM/DD',
