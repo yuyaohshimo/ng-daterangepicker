@@ -3,6 +3,10 @@ ng-daterangepicker
 
 Date range picker for Angular.js
 
+# Demo
+
+http://yuyaohshimo.github.io/ng-daterangepicker
+
 # Installation
 ```
 $ bower install ng-daterangepicker
