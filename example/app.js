@@ -3,12 +3,12 @@ angular.module('test', ['dateRangePicker']);
 angular.module('test').controller('TestCtrl', function($scope) {
   $scope.options = [
     {
-      label: 'Custom',
-      value: 'custom'
-    },
-    {
       label: 'All',
       value: 'all'
+    },
+    {
+      label: 'Custom',
+      value: 'custom'
     },
     {
       label: 'Today',

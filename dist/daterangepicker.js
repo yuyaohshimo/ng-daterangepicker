@@ -42,13 +42,13 @@
 
         $scope._moment = moment();
         $scope.start = {
-          value: $scope.initialRange.start || moment(),
-          month: $scope.initialRange.start ? $scope.initialRange.start.month() : month(),
+          value: $scope.initialRange ? $scope.initialRange.start : moment(),
+          month: $scope.initialRange ? $scope.initialRange.start.month() : moment().month(),
           show: false
         };
         $scope.end = {
-          value: $scope.initialRange.end || moment(),
-          month: $scope.initialRange.end ? $scope.initialRange.end.month() : month(),
+          value: $scope.initialRange ? $scope.initialRange.end : moment(),
+          month: $scope.initialRange ? $scope.initialRange.end.month() : moment().month(),
           show: false
         };
         $scope.start.days = _getDaysPerWeek(_getMonth('start'));
