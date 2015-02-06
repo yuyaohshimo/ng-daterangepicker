@@ -4,7 +4,7 @@
   .daterangepicker__cutom(ng-show="selectedOption.value === 'custom'")
     .daterangepicker__start
       input.daterangepicker__input(ng-if="isMobile" type="date" ng-model="start.value._d")
-      input.daterangepicker__input(ng-if="!isMobile" type="text" ng-model="start.value" ng-click="toggleDropdown('start')" readonly="")
+      input.daterangepicker__input(ng-if="!isMobile" type="text" ng-model="start.value.format(format.date)" ng-click="toggleDropdown('start')" readonly="")
       .daterangepicker__dropdown(ng-show="start.show" ng-if="!isMobile")
         button.daterangepicker__prev(ng-click="onChangeMonth('start', -1)") &lt;
         button.daterangepicker__next(ng-click="onChangeMonth('start', 1)" ng-if="start.month < end.month") &gt;
@@ -21,7 +21,7 @@
     .daterangepicker__to(ng-bind="format.to")
     .daterangepicker__end
       input.daterangepicker__input(ng-if="isMobile" type="date" ng-model="end.value._d")
-      input.daterangepicker__input(ng-if="!isMobile" type="text" ng-model="end.value" ng-click="toggleDropdown('end')" readonly="")
+      input.daterangepicker__input(ng-if="!isMobile" type="text" ng-model="end.value.format(format.date)" ng-click="toggleDropdown('end')" readonly="")
       .daterangepicker__dropdown(ng-show="end.show" ng-if="!isMobile")
         button.daterangepicker__prev(ng-click="onChangeMonth('end', -1)" ng-if="start.month < end.month") &lt;
         button.daterangepicker__next(ng-click="onChangeMonth('end', 1)") &gt;
