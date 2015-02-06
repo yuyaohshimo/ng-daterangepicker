@@ -9,7 +9,7 @@
         button.daterangepicker__prev(ng-click="onChangeMonth('start', -1)") &lt;
         button.daterangepicker__next(ng-click="onChangeMonth('start', 1)" ng-if="start.month < end.month") &gt;
         .daterangepicker__calendars
-          h4.daterangepicker__year {{ _moment.clone().month(start.month).format('YYYY') }}
+          h4.daterangepicker__year {{ _moment.clone().month(start.month).format(locale.year || 'YYYY') }}
           h4.daterangepicker__month {{ _moment.clone().month(start.month).format('MMMM') }}
           table
             thead
@@ -28,7 +28,7 @@
         button.daterangepicker__prev(ng-click="onChangeMonth('end', -1)" ng-if="start.month < end.month") &lt;
         button.daterangepicker__next(ng-click="onChangeMonth('end', 1)") &gt;
         .daterangepicker__calendars
-          h4.daterangepicker__year {{ _moment.clone().month(end.month).format('YYYY') }}
+          h4.daterangepicker__year {{ _moment.clone().month(end.month).format(locale.year || 'YYYY') }}
           h4.daterangepicker__month {{ _moment.clone().month(end.month).format('MMMM') }}
           table
             thead

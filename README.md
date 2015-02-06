@@ -71,6 +71,7 @@ initialRange = {
   end: moment().add(1, 'days') // tomorrow
 };
 locale = {
+  year: 'YYYY年',
   months : '1月_2月_3月_4月_5月_6月_7月_8月_9月_10月_11月_12月'.split('_'),
   weekdaysShort: '日_月_火_水_木_金_土'.split('_')
 };
