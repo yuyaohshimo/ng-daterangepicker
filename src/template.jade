@@ -34,4 +34,4 @@
                 th(ng-repeat="week in weeks") {{ week }}
             tbody
               tr(ng-repeat="week in end.days")
-                td(ng-repeat="day in week" ng-class="{ disabled: day.disabled, selected: !day.disabled && (end.value.month() === _moment.clone().month(end.month).month()) && (day.value == end.value.format('D')) }" ng-click="onSelectDay('end', day, end.value.format('D'), day.value)") {{ day.value }}
+                td(ng-repeat="day in week" ng-class="{ disabled: day.disabled, selected: !day.disabled && (end.value.month() === _moment.clone().month(end.month).month()) && (day.value == end.value.format('D')) }" ng-click="onSelectDay('end', day, start.value.format('D'), day.value)") {{ day.value }}
