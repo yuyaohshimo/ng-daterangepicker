@@ -56,6 +56,10 @@
         $scope.selectedOption = $scope.options[0];
         $scope.weeks = moment.weekdaysShort();
 
+        $scope.onClickSelect = function() {
+          $scope.start.show = $scope.end.show = false;
+        };
+
         $scope.onChangeSelect = function() {
           if ($scope.selectedOption.value === 'custom') { return; }
           if ($scope.selectedOption.value === 'all') {
