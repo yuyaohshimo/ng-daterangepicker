@@ -25,6 +25,7 @@
   right: 0;
 }
 .daterangepicker__calendars {
+  background-color: #fff;
   text-align: center;
 }
 .daterangepicker__calendars .disabled {

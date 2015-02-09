@@ -53,7 +53,7 @@
         };
         $scope.start.days = _getDaysPerWeek(_getMonth('start'));
         $scope.end.days = _getDaysPerWeek(_getMonth('end'));
-        $scope.selectedOption = $scope.options[0];
+        $scope.selectedOption = _getInitialOption();
         $scope.weeks = moment.weekdaysShort();
 
         $scope.onClickSelect = function() {
@@ -112,12 +112,25 @@
 
           $scope.applyDateRange({
             start: start,
-            end: end
+            end: end,
+            option: $scope.selectedOption
           });
         }
 
         function _isValidDay(startDayValue, endDayValue) {
           return moment().clone().month($scope.start.month).day(startDayValue) <= moment().clone().month($scope.end.month).day(endDayValue);
+        }
+
+        function _getInitialOption() {
+          var option;
+          $scope.options.forEach(function(item) {
+            if (item.selected) {
+              option = item;
+              return ;
+            }
+          });
+
+          return option;
         }
 
         function _getOppositeType(type) {
