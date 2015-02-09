@@ -45,7 +45,8 @@ options = [
   // if you want to set all range option, put all
   {
     label: 'All',
-    value: 'all'
+    value: 'all',
+    selected: true
   },
   {
     label: 'Today',
@@ -79,9 +80,10 @@ format = {
   date: 'YYYY/MM/DD',
   to: '~'
 };
-applyDateRange = function(start, end) {
+applyDateRange = function(start, end, option) {
   console.log(start);
   console.log(end);
+  console.log(option);
 };
 ```
 
