@@ -14,23 +14,27 @@
 .daterangepicker__dropdown
   position absolute
   border 1px solid #ddd
-  
+  background-color #fff
+  z-index 10
+
 .daterangepicker__prev
   position absolute
   top 0
   left 0
-  
+
 .daterangepicker__next
   position absolute
   top 0
   right 0
 
 .daterangepicker__calendars
-  background-color #fff
   text-align center
-  z-index 1
   .disabled
     color #aaa
   .selected
     background-color #3498db
     color #fff
+  td
+    cursor pointer
+    &:hover
+      background-color #ddd
