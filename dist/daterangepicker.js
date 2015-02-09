@@ -105,7 +105,10 @@
           var oppositeType = _getOppositeType(type);
           $scope[oppositeType].show = false;
           _resetMonth(oppositeType);
-          $scope[type].show = true;
+          $scope[type].show = !$scope[type].show;
+          if (!$scope[type].show) {
+            _resetMonth(type);
+          }
         };
 
         function _apply(isAll) {
