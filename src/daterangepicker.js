@@ -37,6 +37,8 @@
         angular.element($window).bind('click', function() {
           if (!$scope.start.show && !$scope.end.show) return;
           $scope.start.show = $scope.end.show = false;
+          _resetMonth('start');
+          _resetMonth('end');
           $scope.$apply();
         });
 
@@ -58,6 +60,8 @@
 
         $scope.onClickSelect = function() {
           $scope.start.show = $scope.end.show = false;
+          _resetMonth('start');
+          _resetMonth('end');
         };
 
         $scope.onChangeSelect = function() {
@@ -81,12 +85,13 @@
 
         $scope.onSelectDay = function(type, day, startDayValue, endDayValue) {
           if (day.disabled) { return; }
-          if (!_isValidDay(startDayValue, endDayValue)) { return; }
+          if (!_isValidDay(startDayValue, endDayValue, type)) { return; }
 
           var month = $scope[type].month;
           $scope[type].value = moment().month(month).date(day.value);
 
           $scope[type].show = false;
+          _resetMonth(type);
 
           _apply();
         };
@@ -97,8 +102,10 @@
         };
 
         $scope.toggleDropdown = function(type) {
-          $scope[_getOppositeType(type)].show = false;
-          $scope[type].show = !$scope[type].show;
+          var oppositeType = _getOppositeType(type);
+          $scope[oppositeType].show = false;
+          _resetMonth(oppositeType);
+          $scope[type].show = true;
         };
 
         function _apply(isAll) {
@@ -117,8 +124,16 @@
           });
         }
 
-        function _isValidDay(startDayValue, endDayValue) {
-          return moment().clone().month($scope.start.month).day(startDayValue) <= moment().clone().month($scope.end.month).day(endDayValue);
+        function _isValidDay(startDayValue, endDayValue, type) {          
+          var startMonth = (type === 'start') ? $scope.start.month : $scope.start.value.month();
+          var endMonth = (type === 'end') ? $scope.end.month : $scope.end.value.month();
+          var start = moment().clone().month(startMonth).date(startDayValue);
+          var end = moment().clone().month(endMonth).date(endDayValue);
+          return start <= end;
+        }
+
+        function _resetMonth(type) {
+          $scope[type].month = $scope[type].value.month();
         }
 
         function _getInitialOption() {

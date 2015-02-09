@@ -14,7 +14,7 @@
     return {
       restrict: 'AE',
       replace: true,
-      template: '<div ng-click="$event.stopPropagation()" class="daterangepicker"><div class="daterangepicker__option"><select ng-model="selectedOption" ng-options="option.label for option in options" ng-change="onChangeSelect()" ng-click="onClickSelect()"></select></div><div ng-show="selectedOption.value === \'custom\'" class="daterangepicker__cutom"><div class="daterangepicker__start"><input ng-if="isMobile" type="date" ng-model="start.value._d" class="daterangepicker__input"/><input ng-if="!isMobile" type="text" ng-value="start.value.format(format.date)" ng-click="toggleDropdown(\'start\')" readonly="" class="daterangepicker__input"/><div ng-show="start.show" ng-if="!isMobile" class="daterangepicker__dropdown"><button ng-click="onChangeMonth(\'start\', -1)" class="daterangepicker__prev">&lt;</button><button ng-click="onChangeMonth(\'start\', 1)" ng-if="start.month &lt; end.month" class="daterangepicker__next">&gt;</button><div class="daterangepicker__calendars"><h4 class="daterangepicker__year">{{ _moment.clone().month(start.month).format(locale.year || \'YYYY\') }}</h4><h4 class="daterangepicker__month">{{ _moment.clone().month(start.month).format(\'MMMM\') }}</h4><table><thead><tr><th ng-repeat="week in weeks">{{ week }}</th></tr></thead><tbody><tr ng-repeat="week in start.days"><td ng-repeat="day in week" ng-class="{ disabled: day.disabled, selected: !day.disabled &amp;&amp; (start.value.month() === _moment.clone().month(start.month).month()) &amp;&amp; (day.value == start.value.format(\'D\')) }" ng-click="onSelectDay(\'start\', day, day.value, end.value.format(\'D\'))">{{ day.value }}</td></tr></tbody></table></div></div></div><div ng-bind="format.to" class="daterangepicker__to"></div><div class="daterangepicker__end"><input ng-if="isMobile" type="date" ng-model="end.value._d" class="daterangepicker__input"/><input ng-if="!isMobile" type="text" ng-value="end.value.format(format.date)" ng-click="toggleDropdown(\'end\')" readonly="" class="daterangepicker__input"/><div ng-show="end.show" ng-if="!isMobile" class="daterangepicker__dropdown"><button ng-click="onChangeMonth(\'end\', -1)" ng-if="start.month &lt; end.month" class="daterangepicker__prev">&lt;</button><button ng-click="onChangeMonth(\'end\', 1)" class="daterangepicker__next">&gt;</button><div class="daterangepicker__calendars"><h4 class="daterangepicker__year">{{ _moment.clone().month(end.month).format(locale.year || \'YYYY\') }}</h4><h4 class="daterangepicker__month">{{ _moment.clone().month(end.month).format(\'MMMM\') }}</h4><table><thead><tr><th ng-repeat="week in weeks">{{ week }}</th></tr></thead><tbody><tr ng-repeat="week in end.days"><td ng-repeat="day in week" ng-class="{ disabled: day.disabled, selected: !day.disabled &amp;&amp; (end.value.month() === _moment.clone().month(end.month).month()) &amp;&amp; (day.value == end.value.format(\'D\')) }" ng-click="onSelectDay(\'end\', day, start.value.format(\'D\'), day.value)">{{ day.value }}</td></tr></tbody></table></div></div></div></div></div>',
+      template: '<div ng-click="$event.stopPropagation()" class="daterangepicker"><div class="daterangepicker__option"><select ng-model="selectedOption" ng-options="option.label for option in options" ng-change="onChangeSelect()" ng-click="onClickSelect()"></select></div><div ng-show="selectedOption.value === \'custom\'" class="daterangepicker__cutom"><div class="daterangepicker__start"><input ng-if="isMobile" type="date" ng-model="start.value._d" class="daterangepicker__input"/><input ng-if="!isMobile" type="text" ng-value="start.value.format(format.date)" ng-click="toggleDropdown(\'start\')" readonly="" class="daterangepicker__input"/><div ng-show="start.show" ng-if="!isMobile" class="daterangepicker__dropdown"><button ng-click="onChangeMonth(\'start\', -1)" class="daterangepicker__prev">&lt;</button><button ng-click="onChangeMonth(\'start\', 1)" ng-if="start.month &lt; end.month" class="daterangepicker__next">&gt;</button><div class="daterangepicker__calendars"><h4 class="daterangepicker__year">{{ _moment.clone().month(start.month).format(locale.year || \'YYYY\') }}</h4><h4 class="daterangepicker__month">{{ _moment.clone().month(start.month).format(\'MMMM\') }}</h4><table><thead><tr><th ng-repeat="week in weeks">{{ week }}</th></tr></thead><tbody><tr ng-repeat="week in start.days"><td ng-repeat="day in week" ng-class="{ disabled: day.disabled, selected: !day.disabled &amp;&amp; (start.value.month() === start.month) &amp;&amp; (day.value == start.value.format(\'D\')) }" ng-click="onSelectDay(\'start\', day, day.value, end.value.format(\'D\'))">{{ day.value }}</td></tr></tbody></table></div></div></div><div ng-bind="format.to" class="daterangepicker__to"></div><div class="daterangepicker__end"><input ng-if="isMobile" type="date" ng-model="end.value._d" class="daterangepicker__input"/><input ng-if="!isMobile" type="text" ng-value="end.value.format(format.date)" ng-click="toggleDropdown(\'end\')" readonly="" class="daterangepicker__input"/><div ng-show="end.show" ng-if="!isMobile" class="daterangepicker__dropdown"><button ng-click="onChangeMonth(\'end\', -1)" ng-if="start.month &lt; end.month" class="daterangepicker__prev">&lt;</button><button ng-click="onChangeMonth(\'end\', 1)" class="daterangepicker__next">&gt;</button><div class="daterangepicker__calendars"><h4 class="daterangepicker__year">{{ _moment.clone().month(end.month).format(locale.year || \'YYYY\') }}</h4><h4 class="daterangepicker__month">{{ _moment.clone().month(end.month).format(\'MMMM\') }}</h4><table><thead><tr><th ng-repeat="week in weeks">{{ week }}</th></tr></thead><tbody><tr ng-repeat="week in end.days"><td ng-repeat="day in week" ng-class="{ disabled: day.disabled, selected: !day.disabled &amp;&amp; (end.value.month() === end.month) &amp;&amp; (day.value == end.value.format(\'D\')) }" ng-click="onSelectDay(\'end\', day, start.value.format(\'D\'), day.value)">{{ day.value }}</td></tr></tbody></table></div></div></div></div></div>',
       scope: {
         isMobile: '=',
         options: '=',
@@ -37,6 +37,8 @@
         angular.element($window).bind('click', function() {
           if (!$scope.start.show && !$scope.end.show) return;
           $scope.start.show = $scope.end.show = false;
+          _resetMonth('start');
+          _resetMonth('end');
           $scope.$apply();
         });
 
@@ -58,6 +60,8 @@
 
         $scope.onClickSelect = function() {
           $scope.start.show = $scope.end.show = false;
+          _resetMonth('start');
+          _resetMonth('end');
         };
 
         $scope.onChangeSelect = function() {
@@ -81,12 +85,13 @@
 
         $scope.onSelectDay = function(type, day, startDayValue, endDayValue) {
           if (day.disabled) { return; }
-          if (!_isValidDay(startDayValue, endDayValue)) { return; }
+          if (!_isValidDay(startDayValue, endDayValue, type)) { return; }
 
           var month = $scope[type].month;
           $scope[type].value = moment().month(month).date(day.value);
 
           $scope[type].show = false;
+          _resetMonth(type);
 
           _apply();
         };
@@ -97,8 +102,10 @@
         };
 
         $scope.toggleDropdown = function(type) {
-          $scope[_getOppositeType(type)].show = false;
-          $scope[type].show = !$scope[type].show;
+          var oppositeType = _getOppositeType(type);
+          $scope[oppositeType].show = false;
+          _resetMonth(oppositeType);
+          $scope[type].show = true;
         };
 
         function _apply(isAll) {
@@ -117,8 +124,16 @@
           });
         }
 
-        function _isValidDay(startDayValue, endDayValue) {
-          return moment().clone().month($scope.start.month).day(startDayValue) <= moment().clone().month($scope.end.month).day(endDayValue);
+        function _isValidDay(startDayValue, endDayValue, type) {          
+          var startMonth = (type === 'start') ? $scope.start.month : $scope.start.value.month();
+          var endMonth = (type === 'end') ? $scope.end.month : $scope.end.value.month();
+          var start = moment().clone().month(startMonth).date(startDayValue);
+          var end = moment().clone().month(endMonth).date(endDayValue);
+          return start <= end;
+        }
+
+        function _resetMonth(type) {
+          $scope[type].month = $scope[type].value.month();
         }
 
         function _getInitialOption() {
