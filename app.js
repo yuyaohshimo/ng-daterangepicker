@@ -3,12 +3,13 @@ angular.module('test', ['dateRangePicker']);
 angular.module('test').controller('TestCtrl', function($scope) {
   $scope.options = [
     {
-      label: 'Custom',
-      value: 'custom'
-    },
-    {
       label: 'All',
       value: 'all'
+    },
+    {
+      label: 'Custom',
+      value: 'custom',
+      selected: true
     },
     {
       label: 'Today',
@@ -42,8 +43,9 @@ angular.module('test').controller('TestCtrl', function($scope) {
     date: 'YYYY/MM/DD',
     to: '~'
   };
-  $scope.applyDateRange = function(start, end) {
-    console.log(start);
-    console.log(end);
+  $scope.applyDateRange = function(start, end, option) {
+    $scope.start = start ? start.value : null;
+    $scope.end = end ? end.value : null;
+    $scope.option = option.value;
   };
 });
