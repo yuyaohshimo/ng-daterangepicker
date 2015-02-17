@@ -19,13 +19,13 @@ angular.module('test').controller('TestCtrl', function($scope) {
     },
     {
       label: 'This week',
-      value:'thisWeek',
+      value:'this_week',
       start: moment().startOf('week'),
       end: moment().endOf('week')
     },
     {
       label: 'This month',
-      value:'thisMonth',
+      value:'this_month',
       start: moment().startOf('month'),
       end: moment().endOf('month')
     }

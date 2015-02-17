@@ -11,9 +11,15 @@
     <input type="checkbox" ng-model="isMobile"> isMobile: {{!!isMobile}}
     <date-range-picker is-mobile="isMobile" options="options" initial-range="initialRange" locale="locale" format="format" apply-date-range="applyDateRange(start, end, option)"></date-range-picker>
     <h4>Range</h4>
-    <p>Start: {{start}}</p>
-    <p>End: {{end}} </p>
-    <p>Selected Option: {{option}} </p>
+    <p>Start: 
+      <span>{{start}}</span>
+    </p>
+    <p>End: 
+    <span>{{end}}</span>
+    </p>
+    <p class="selected_option">Selected Option: 
+      <span>{{option}}</span>
+    </p>
     <script type="text/javascript" src="app.js"></script>
   </body>
 </html>
