@@ -70,7 +70,7 @@ gulp.task('webserver', function() {
 
 gulp.task('protractor', function() {
   return gulp
-  .src(['./test/*.js'])
+  .src(['./test/e2e/spec/*.js'])
   .pipe(protractor({
     configFile: 'test/e2e/config.js',
     args: ['--baseUrl', 'http://' + config.http.host + ':' + config.http.port]
