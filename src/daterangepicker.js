@@ -16,7 +16,7 @@
       replace: true,
       template: '{html}',
       scope: {
-        isMobile: '=',
+        useBrowserDefault: '=',
         options: '=',
         initialRange: '=',
         locale: '=',

@@ -23,11 +23,11 @@ You should write script and link tag in HTML header:
 ```
 You should write `date-range-picker` tag as an angular directive:
 ```html
-<date-range-picker is-mobile="isMobile" options="options" initial-range="initialRange" locale="locale" format="format" apply-date-range="applyDateRange(start, end)"></date-range-picker>
+<date-range-picker use-browser-default="useBrowserDefault" options="options" initial-range="initialRange" locale="locale" format="format" apply-date-range="applyDateRange(start, end)"></date-range-picker>
 ```
 
 ## Options
-  - `is-mobile`: if you want to use a browser's calendar, set `true`
+  - `use-browser-default`: if you want to use a browser's calendar, set `true`
   - `options`: range options
   - `initial-range`: initial range
   - `locale`: locale for `moment`

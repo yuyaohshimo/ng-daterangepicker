@@ -8,8 +8,8 @@
   </head>
   <body ng-app="test">
     <div ng-controller="TestCtrl">
-    <input type="checkbox" ng-model="isMobile"> isMobile: {{!!isMobile}}
-    <date-range-picker is-mobile="isMobile" options="options" initial-range="initialRange" locale="locale" format="format" apply-date-range="applyDateRange(start, end, option)"></date-range-picker>
+    <input type="checkbox" ng-model="useBrowserDefault"> useBrowserDefault: {{!!useBrowserDefault}}
+    <date-range-picker use-browser-default="useBrowserDefault" options="options" initial-range="initialRange" locale="locale" format="format" apply-date-range="applyDateRange(start, end, option)"></date-range-picker>
     <h4>Range</h4>
     <p>Start: 
       <span class="start">{{start}}</span>
