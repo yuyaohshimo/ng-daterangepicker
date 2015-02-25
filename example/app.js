@@ -44,8 +44,8 @@ angular.module('test').controller('TestCtrl', function($scope) {
     to: '~'
   };
   $scope.applyDateRange = function(start, end, option) {
-    $scope.start = start ? moment(start.value).format($scope.format.date) : null;
-    $scope.end = end ? moment(end.value).format($scope.format.date) : null;
+    $scope.start = start ? start.value.format($scope.format.date) : null;
+    $scope.end = end ? end.value.format($scope.format.date) : null;
     $scope.option = option.value;
   };
 });
