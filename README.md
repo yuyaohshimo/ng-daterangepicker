@@ -91,7 +91,7 @@ applyDateRange = function(start, end, option) {
 
 ## E2E Test
 
-We can use E2E test using protractor.
+We can do E2E test using protractor.
 
 ```
 $ npm run update-webdriver
