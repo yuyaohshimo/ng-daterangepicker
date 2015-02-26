@@ -87,6 +87,18 @@ applyDateRange = function(start, end, option) {
 };
 ```
 
+# Test
+
+## E2E Test
+
+```
+$ npm run update-webdriver
+```
+
+```
+$ gulp test:e2e
+```
+
 # License
 
 [MIT license](LICENSE)
