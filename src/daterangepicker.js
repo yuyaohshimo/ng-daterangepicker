@@ -42,6 +42,18 @@
           $scope.$apply();
         });
 
+        // use browse default
+        $scope.$watch('useBrowserDefault', function() {
+          if ($scope.useBrowserDefault) {
+            angular.element(document).ready(function() {
+              angular.element(document.querySelectorAll('.daterangepicker__input')).bind('change', function() {
+                _apply();
+                $scope.$apply();
+              });
+            });
+          }
+        });
+
         $scope._moment = moment();
         $scope.start = {
           value: $scope.initialRange ? $scope.initialRange.start : moment(),
