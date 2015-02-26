@@ -127,6 +127,10 @@
           var start = $scope.start;
           var end = $scope.end;
 
+          if (!start.value._d || !end.value._d) {
+            return;
+          }
+
           if (isAll) {
             start = null;
             end = null;
