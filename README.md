@@ -87,6 +87,14 @@ applyDateRange = function(start, end, option) {
 };
 ```
 
+# Development
+
+Please run gulp.
+
+```
+$ gulp
+```
+
 # Test
 
 ## E2E Test
