@@ -19,13 +19,13 @@ angular.module('test').controller('TestCtrl', function($scope) {
     },
     {
       label: 'This week',
-      value:'thisWeek',
+      value:'this_week',
       start: moment().startOf('week'),
       end: moment().endOf('week')
     },
     {
       label: 'This month',
-      value:'thisMonth',
+      value:'this_month',
       start: moment().startOf('month'),
       end: moment().endOf('month')
     }
@@ -44,8 +44,8 @@ angular.module('test').controller('TestCtrl', function($scope) {
     to: '~'
   };
   $scope.applyDateRange = function(start, end, option) {
-    $scope.start = start ? start.value : null;
-    $scope.end = end ? end.value : null;
+    $scope.start = start ? start.value.format($scope.format.date) : null;
+    $scope.end = end ? end.value.format($scope.format.date) : null;
     $scope.option = option.value;
   };
 });
