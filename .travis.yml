@@ -8,4 +8,4 @@ addons:
 before_install: npm install -g gulp
 
 script:
-  - gulp test:e2e
+  - gulp travis:e2e

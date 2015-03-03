@@ -87,6 +87,8 @@ gulp.task('test:e2e', function(callback) {
   );
 });
 
+gulp.task('travis:e2e', ['protractor']);
+
 gulp.task('watch', function() {
   gulp.watch(['./src/*.*'], ['default']);
 });
