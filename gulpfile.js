@@ -11,6 +11,7 @@ var uglify = require('gulp-uglify');
 var replace = require('gulp-replace');
 var protractor = require('gulp-protractor').protractor;
 var webserver = require('gulp-webserver');
+var webserverStream;
 
 var config = {
   http: {
@@ -60,12 +61,14 @@ gulp.task('script', function() {
 });
 
 gulp.task('webserver', function() {
-  return gulp
+  webserverStream = gulp
   .src(['example', 'bower_components', 'dist'])
   .pipe(webserver({
     hot: config.http.host,
     port: config.http.port
   }));
+
+  return webserverStream;
 });
 
 gulp.task('protractor', function() {
@@ -83,7 +86,10 @@ gulp.task('test:e2e', function(callback) {
   runSequence(
     'webserver',
     'protractor',
-    callback
+    function() {
+      webserverStream.emit('kill');
+      callback();
+    }
   );
 });
 
