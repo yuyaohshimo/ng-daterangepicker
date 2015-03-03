@@ -1,4 +1,4 @@
-ng-daterangepicker
+ng-daterangepicker [![Build Status](https://travis-ci.org/yuyaohshimo/ng-daterangepicker.svg?branch=master)](https://travis-ci.org/yuyaohshimo/ng-daterangepicker)
 ==================
 
 Date range picker for Angular.js
