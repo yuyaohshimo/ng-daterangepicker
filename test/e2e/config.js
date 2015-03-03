@@ -3,7 +3,8 @@ exports.config = {
 
   capabilities: {
     'browserName': 'chrome',
-    'name': 'ng-daterangepicker E2E Tests'
+    'name': 'ng-daterangepicker E2E Tests',
+    'tunnel-identifier' : process.env.TRAVIS_JOB_NUMBER
   },
 
   sauceUser: process.env.SAUCE_USERNAME,

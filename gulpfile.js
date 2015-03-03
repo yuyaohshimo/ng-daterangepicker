@@ -74,7 +74,7 @@ gulp.task('protractor', function() {
   .pipe(protractor({
     configFile: 'test/e2e/config.js',
     args: [
-      '--baseUrl', process.env.BASE_URL || 'http://' + config.http.host + ':' + config.http.port]
+      '--baseUrl', 'http://' + config.http.host + ':' + config.http.port]
   }))
   .on('error', function(e) { throw e; });
 });
