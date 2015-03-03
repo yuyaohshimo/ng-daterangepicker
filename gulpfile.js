@@ -95,6 +95,7 @@ gulp.task('watch', function() {
 
 gulp.task('default', function(callback) {
   runSequence(
+    'webserver',
     'template',
     'script',
     'style',
