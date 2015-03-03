@@ -8,7 +8,7 @@ describe('ng-daterangepicker', function() {
   };
 
   beforeEach(function() {
-    browser.get(browser.baseUrl + '/example');
+    browser.get(browser.baseUrl);
     browser.navigate().refresh();
   });
 

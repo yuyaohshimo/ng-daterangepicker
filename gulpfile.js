@@ -61,7 +61,7 @@ gulp.task('script', function() {
 
 gulp.task('webserver', function() {
   return gulp
-  .src('')
+  .src(['example', 'bower_components', 'dist'])
   .pipe(webserver({
     hot: config.http.host,
     port: config.http.port
@@ -73,7 +73,8 @@ gulp.task('protractor', function() {
   .src(['./test/e2e/spec/*.js'])
   .pipe(protractor({
     configFile: 'test/e2e/config.js',
-    args: ['--baseUrl', 'http://' + config.http.host + ':' + config.http.port]
+    args: [
+      '--baseUrl', process.env.BASE_URL || 'http://' + config.http.host + ':' + config.http.port]
   }))
   .on('error', function(e) { throw e; });
 });
