@@ -70,8 +70,15 @@ describe('ng-daterangepicker', function() {
   });
 
   it('should start selects custom date', function() {
+    // click start
     $('.daterangepicker__start .daterangepicker__input').click();
-    $('.daterangepicker__start .daterangepicker__calendars tbody tr td').click();
+    element.all(by.css('.daterangepicker__start .daterangepicker__calendars tbody tr td')).each(function(element, index) {
+      element.getText().then(function (text) {
+        if (text === '1') {
+          element.click();
+        }
+      });
+    });
 
     var startValue = $('.daterangepicker__start .daterangepicker__input').getAttribute('value');
     var start = $('.start').getText();
@@ -80,8 +87,25 @@ describe('ng-daterangepicker', function() {
   });
 
   it('should end selects custom date', function() {
+    // click start
+    $('.daterangepicker__start .daterangepicker__input').click();
+    element.all(by.css('.daterangepicker__start .daterangepicker__calendars tbody tr td')).each(function(element, index) {
+      element.getText().then(function (text) {
+        if (text === '1') {
+          element.click();
+        }
+      });
+    });
+
+    // click end
     $('.daterangepicker__end .daterangepicker__input').click();
-    $$('.daterangepicker__end .daterangepicker__calendars tbody tr td').last().click();
+    element.all(by.css('.daterangepicker__end .daterangepicker__calendars tbody tr td')).each(function(element, index) {
+      element.getText().then(function (text) {
+        if (text === '2') {
+          element.click();
+        }
+      });
+    });
 
     var endValue = $('.daterangepicker__end .daterangepicker__input').getAttribute('value');
     var end = $('.end').getText();
