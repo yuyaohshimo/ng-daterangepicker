@@ -62,7 +62,7 @@ gulp.task('script', function() {
 
 gulp.task('webserver', function() {
   webserverStream = gulp
-  .src(['example', 'bower_components', 'dist'])
+  .src([''])
   .pipe(webserver({
     hot: config.http.host,
     port: config.http.port
@@ -99,7 +99,6 @@ gulp.task('watch', function() {
 
 gulp.task('default', function(callback) {
   runSequence(
-    'webserver',
     'template',
     'script',
     'style',
