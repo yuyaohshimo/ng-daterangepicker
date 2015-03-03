@@ -5,6 +5,9 @@ exports.config = {
     'browserName': 'chrome'
   },
 
+  sauceUser: process.env.SAUCE_USERNAME,
+  sauceKey: process.env.SAUCE_ACCESS_KEY,
+
   framework: 'jasmine',
 
   jasmineNodeOpts: {
