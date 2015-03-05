@@ -11,6 +11,7 @@ exports.config = {
       'tunnel-identifier' : process.env.TRAVIS_JOB_NUMBER
     },
     {
+      'os': 'Windows 7',
       'platform': 'WINDOWS',
       'browserName': 'internet explorer',
       'version': '11',
