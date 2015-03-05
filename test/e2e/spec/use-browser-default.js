@@ -1,11 +1,4 @@
-describe('ng-daterangepicker', function() {
-
-  var formatDate = function(date) {
-    var year = date.getFullYear();
-    var month = ('0' + (date.getMonth() + 1)).slice(-2);
-    var day = ('0' + date.getDate()).slice(-2);
-    return year + '/' + month + '/' + day;
-  };
+describe('ng-daterangepicker user browser default', function() {
 
   beforeEach(function() {
     browser.get(browser.baseUrl + '/example');
