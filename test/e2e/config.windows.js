@@ -5,15 +5,13 @@ exports.config = {
 
   multiCapabilities: [
     {
-      'platform': 'WIN8',
       'browserName': 'chrome',
       'name': 'ng-daterangepicker E2E Tests on chrome in WIN8',
       'tunnel-identifier' : process.env.TRAVIS_JOB_NUMBER
     },
     {
-      'platform': 'WIN8',
       'browserName': 'internet explorer',
-      'version': '10',
+      'version': '11',
       'name': 'ng-daterangepicker E2E Tests on ie in WIN8',
       'tunnel-identifier' : process.env.TRAVIS_JOB_NUMBER
     }
