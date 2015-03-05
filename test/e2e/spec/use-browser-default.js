@@ -1,8 +1,9 @@
 describe('ng-daterangepicker user browser default', function() {
 
   beforeEach(function() {
-    browser.get(browser.baseUrl + '/example');
     browser.navigate().refresh();
+    browser.get(browser.baseUrl + '/example');
+    browser.waitForAngular();
     element(by.model('useBrowserDefault')).click();
   });
 

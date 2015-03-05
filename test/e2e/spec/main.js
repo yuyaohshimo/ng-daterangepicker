@@ -8,8 +8,9 @@ describe('ng-daterangepicker main', function() {
   };
 
   beforeEach(function() {
-    browser.get(browser.baseUrl + '/example');
     browser.navigate().refresh();
+    browser.get(browser.baseUrl + '/example');
+    browser.waitForAngular();
   });
 
   it('should be initial select is blank', function() {
