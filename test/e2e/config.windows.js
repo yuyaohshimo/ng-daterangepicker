@@ -13,7 +13,7 @@ exports.config = {
     {
       'platform': 'WIN8',
       'browserName': 'internet explorer',
-      'version': '11',
+      'version': '10',
       'name': 'ng-daterangepicker E2E Tests on ie in WIN8',
       'tunnel-identifier' : process.env.TRAVIS_JOB_NUMBER
     }
