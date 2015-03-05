@@ -10,4 +10,5 @@ before_install:
   - bower install
 
 script:
-  - gulp test:e2e
+  - gulp test:e2e --mac
+  - gulp test:e2e --windows

@@ -14,10 +14,11 @@
     "gulp-stylus": "^2.0.0",
     "gulp-uglify": "^1.1.0",
     "gulp-webserver": "^0.9.0",
+    "lodash": "^3.3.1",
     "rimraf": "^2.2.8",
     "run-sequence": "^1.0.2"
   },
   "scripts": {
-    "update-webdriver": "node node_modules/gulp-protractor/node_modules/protractor/bin/webdriver-manager update"
+    "update-webdriver": "node node_modules/gulp-protractor/node_modules/protractor/bin/webdriver-manager update --ie"
   }
 }

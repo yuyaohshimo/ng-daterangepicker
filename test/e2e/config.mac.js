@@ -3,13 +3,9 @@ exports.config = {
 
   multiCapabilities: [
     {
+      'platform': 'MAC',
       'browserName': 'chrome',
-      'name': 'ng-daterangepicker E2E Tests in chrome',
-      'tunnel-identifier' : process.env.TRAVIS_JOB_NUMBER
-    },
-    {
-      'browserName': 'internet explorer',
-      'name': 'ng-daterangepicker E2E Tests in ie',
+      'name': 'ng-daterangepicker E2E Tests on chrome in MAC',
       'tunnel-identifier' : process.env.TRAVIS_JOB_NUMBER
     }
   ],

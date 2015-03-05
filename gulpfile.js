@@ -1,5 +1,6 @@
 var fs = require('fs');
 var rimraf = require('rimraf');
+var _ = require('lodash');
 
 var gulp = require('gulp');
 var runSequence = require('run-sequence');
@@ -72,10 +73,13 @@ gulp.task('webserver', function() {
 });
 
 gulp.task('protractor', function() {
+  var protractorEnv = _.intersection(_.keys(gulp.env), ['mac', 'windows'])[0] || 'mac';
+  var configFile = 'test/e2e/config.' + protractorEnv + '.js';
+
   return gulp
   .src(['./test/e2e/spec/*.js'])
   .pipe(protractor({
-    configFile: 'test/e2e/config.js',
+    configFile: configFile,
     args: [
       '--baseUrl', 'http://' + config.http.host + ':' + config.http.port]
   }))
