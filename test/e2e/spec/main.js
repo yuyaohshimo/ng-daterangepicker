@@ -81,6 +81,8 @@ describe('ng-daterangepicker main', function() {
       });
     });
 
+    $('.daterangepicker__apply').click();
+
     var startValue = $('.daterangepicker__start .daterangepicker__input').getAttribute('value');
     var start = $('.start').getText();
 
@@ -108,6 +110,8 @@ describe('ng-daterangepicker main', function() {
       });
     });
 
+    $('.daterangepicker__apply').click();
+
     var endValue = $('.daterangepicker__end .daterangepicker__input').getAttribute('value');
     var end = $('.end').getText();
 
@@ -121,6 +125,8 @@ describe('ng-daterangepicker main', function() {
 
     $('.daterangepicker__end .daterangepicker__input').click();
     $('.daterangepicker__end .daterangepicker__calendars tbody tr td').click();
+
+    $('.daterangepicker__apply').click();
 
     var start = $('.start').getText();
     var end = $('.end').getText();

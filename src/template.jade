@@ -37,3 +37,4 @@
             tbody
               tr(ng-repeat="week in end.days")
                 td(ng-repeat="day in week" ng-class="{ disabled: day.disabled, selected: !day.disabled && (end.value.month() === end.month) && (day.value == end.value.format('D')) }" ng-click="onSelectDay('end', day, start.value.format('D'), day.value)") {{ day.value }}
+    button.daterangepicker__apply(ng-click="applyDate()") {{ applyButtonLabel }}
