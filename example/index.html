@@ -9,7 +9,7 @@
   <body>
     <div ng-controller="TestCtrl">
     <input type="checkbox" ng-model="useBrowserDefault"> useBrowserDefault: {{!!useBrowserDefault}}
-    <date-range-picker use-browser-default="useBrowserDefault" options="options" initial-range="initialRange" locale="locale" format="format" apply-date-range="applyDateRange(start, end, option)"></date-range-picker>
+    <date-range-picker use-browser-default="useBrowserDefault" options="options" initial-range="initialRange" locale="locale" format="format" apply-button-label="applyButtonLabel" apply-date-range="applyDateRange(start, end, option)"></date-range-picker>
     <h4>Range</h4>
     <p>Start: 
       <span class="start">{{start}}</span>

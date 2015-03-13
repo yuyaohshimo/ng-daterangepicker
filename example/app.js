@@ -1,6 +1,7 @@
 angular.module('test', ['dateRangePicker']);
     
 angular.module('test').controller('TestCtrl', function($scope) {
+  $scope.applyButtonLabel = 'Apply';
   $scope.options = [
     {
       label: 'All',

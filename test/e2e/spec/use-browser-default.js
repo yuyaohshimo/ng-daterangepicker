@@ -15,6 +15,8 @@ describe('ng-daterangepicker user browser default', function() {
     start.sendKeys(date + month + year);
     var startValue = year + '/' + month + '/' + date;
 
+    $('.daterangepicker__apply').click();
+
     var output = $('.start').getText();
 
     expect(output).toBe(startValue);
@@ -27,6 +29,8 @@ describe('ng-daterangepicker user browser default', function() {
     var end = element(by.model('end.value._d'));
     end.sendKeys(date + month + year);
     var startValue = year + '/' + month + '/' + date;
+
+    $('.daterangepicker__apply').click();
 
     var output = $('.end').getText();
 

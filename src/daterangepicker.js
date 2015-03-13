@@ -93,6 +93,7 @@ angular.module('dateRangePicker', [])
     });
   }
 
+  $scope.applyButtonLabel = $scope.applyButtonLabel || 'Apply';
   $scope._moment = moment();
   $scope.start = {
     value: $scope.initialRange ? $scope.initialRange.start : moment(),
@@ -143,8 +144,6 @@ angular.module('dateRangePicker', [])
 
     $scope[type].show = false;
     $scope.resetMonth(type);
-
-    $scope.applyDate();
   };
 
   $scope.onChangeMonth = function(type, addtionalMonth) {
@@ -199,7 +198,8 @@ angular.module('dateRangePicker', [])
       locale: '=',
       rangeOptions: '=',
       format: '=',
-      applyDateRange: '&'
+      applyDateRange: '&',
+      applyButtonLabel: '='
     },
     controller: 'dateRangePickerController',
     link: function($scope, element, attrs) {
@@ -218,7 +218,6 @@ angular.module('dateRangePicker', [])
         if ($scope.useBrowserDefault) {
           angular.element(document).ready(function() {
             angular.element(document.querySelectorAll('.daterangepicker__input')).bind('change', function() {
-              $scope.applyDate();
               $scope.$apply();
             });
           });
