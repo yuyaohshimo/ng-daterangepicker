@@ -1,6 +1,6 @@
 {
   "name": "ng-daterangepicker",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Date range picker for Angular.js",
   "author": "Yuya Ohshimo <yohshimo@coiney.com>",
   "license": "MIT",
