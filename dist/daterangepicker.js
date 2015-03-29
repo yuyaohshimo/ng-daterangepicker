@@ -8,7 +8,7 @@
 angular.module('dateRangePicker', [])
 
 .factory('dateRangePickerService', [function() {
-  var getMonth = function(month) {      
+  var getMonth = function(month) {
     var prevDays = moment().month(month).startOf('month').day();
     var presentDays = moment().month(month).endOf('month').date();
     var nextDays = 6 - moment().month(month).endOf('month').day();
@@ -42,9 +42,14 @@ angular.module('dateRangePicker', [])
     return days;
   };
 
-  var isValidDay = function(start, end, startDayValue, endDayValue, type) {          
-    var startMonth = (type === 'start') ? start.month : start.value.month();
-    var endMonth = (type === 'end') ? end.month : end.value.month();
+  var getMonthValue = function(m) {
+    var _m = m.clone().endOf('month');
+    return moment().month() + _m.diff(moment().endOf('month'), 'month');
+  };
+
+  var isValidDay = function(start, end, startDayValue, endDayValue, type) {
+    var startMonth = (type === 'start') ? start.month : this.getMonthValue(start.value);
+    var endMonth = (type === 'end') ? end.month : this.getMonthValue(end.value);
     return moment().clone().month(startMonth).date(startDayValue) <= moment().clone().month(endMonth).date(endDayValue);
   };
 
@@ -77,6 +82,7 @@ angular.module('dateRangePicker', [])
 
   return {
     getMonth: getMonth,
+    getMonthValue: getMonthValue,
     isValidDay: isValidDay,
     getInitialOption: getInitialOption,
     getOppositeType: getOppositeType,
@@ -97,12 +103,12 @@ angular.module('dateRangePicker', [])
   $scope._moment = moment();
   $scope.start = {
     value: $scope.initialRange ? $scope.initialRange.start : moment(),
-    month: $scope.initialRange ? $scope.initialRange.start.month() : moment().month(),
+    month: $scope.initialRange ? dateRangePickerService.getMonthValue($scope.initialRange.start) : moment().month(),
     show: false
   };
   $scope.end = {
     value: $scope.initialRange ? $scope.initialRange.end : moment(),
-    month: $scope.initialRange ? $scope.initialRange.end.month() : moment().month(),
+    month: $scope.initialRange ? dateRangePickerService.getMonthValue($scope.initialRange.end) : moment().month(),
     show: false
   };
   $scope.start.days = dateRangePickerService.getDaysPerWeek(dateRangePickerService.getMonth($scope.start.month));
@@ -124,12 +130,12 @@ angular.module('dateRangePicker', [])
 
     // start
     $scope.start.value = $scope.selectedOption.start;
-    $scope.start.month = $scope.start.value.month();
+    $scope.start.month = dateRangePickerService.getMonthValue($scope.start.value);
     $scope.start.days = dateRangePickerService.getDaysPerWeek(dateRangePickerService.getMonth($scope.start.month));
 
     // end
     $scope.end.value = $scope.selectedOption.end;
-    $scope.end.month = $scope.end.value.month();
+    $scope.end.month = dateRangePickerService.getMonthValue($scope.end.value);
     $scope.end.days = dateRangePickerService.getDaysPerWeek(dateRangePickerService.getMonth($scope.end.month));
 
     $scope.applyDate();
@@ -182,15 +188,19 @@ angular.module('dateRangePicker', [])
   };
 
   $scope.resetMonth = function(type) {
-    $scope[type].month = $scope[type].value.month();
+    $scope[type].month = dateRangePickerService.getMonthValue($scope[type].value);
   };
+
+  $scope.getMonthValue = function(m) {
+    return dateRangePickerService.getMonthValue(m);
+  }
 }])
 
 .directive('dateRangePicker', ['$window', function($window) {
   return {
     restrict: 'AE',
     replace: true,
-    template: '<div ng-click="$event.stopPropagation()" class="daterangepicker"><div class="daterangepicker__option"><select ng-model="selectedOption" ng-options="option.label for option in options" ng-change="onChangeSelect()" ng-click="onClickSelect()"></select></div><div ng-show="selectedOption.value === \'custom\'" class="daterangepicker__cutom"><div class="daterangepicker__start"><input ng-if="useBrowserDefault" type="date" ng-model="start.value._d" class="daterangepicker__input"/><input ng-if="!useBrowserDefault" type="text" ng-value="start.value.format(format.date)" ng-click="toggleDropdown(\'start\')" readonly="" class="daterangepicker__input"/><div ng-show="start.show" ng-if="!useBrowserDefault" class="daterangepicker__dropdown"><button ng-click="onChangeMonth(\'start\', -1)" class="daterangepicker__prev">&lt;</button><button ng-click="onChangeMonth(\'start\', 1)" ng-if="start.month &lt; end.month" class="daterangepicker__next">&gt;</button><div class="daterangepicker__calendars"><h4><div class="daterangepicker__year">{{ _moment.clone().month(start.month).format(locale.year || \'YYYY\') }}</div><div class="daterangepicker__month">{{ _moment.clone().month(start.month).format(\'MMMM\') }}</div></h4><table><thead><tr><th ng-repeat="week in weeks">{{ week }}</th></tr></thead><tbody><tr ng-repeat="week in start.days"><td ng-repeat="day in week" ng-class="{ disabled: day.disabled, selected: !day.disabled &amp;&amp; (start.value.month() === start.month) &amp;&amp; (day.value == start.value.format(\'D\')) }" ng-click="onSelectDay(\'start\', day, day.value, end.value.format(\'D\'))">{{ day.value }}</td></tr></tbody></table></div></div></div><div ng-bind="format.to" class="daterangepicker__to"></div><div class="daterangepicker__end"><input ng-if="useBrowserDefault" type="date" ng-model="end.value._d" class="daterangepicker__input"/><input ng-if="!useBrowserDefault" type="text" ng-value="end.value.format(format.date)" ng-click="toggleDropdown(\'end\')" readonly="" class="daterangepicker__input"/><div ng-show="end.show" ng-if="!useBrowserDefault" class="daterangepicker__dropdown"><button ng-click="onChangeMonth(\'end\', -1)" ng-if="start.month &lt; end.month" class="daterangepicker__prev">&lt;</button><button ng-click="onChangeMonth(\'end\', 1)" class="daterangepicker__next">&gt;</button><div class="daterangepicker__calendars"><h4 class="daterangepicker__year">{{ _moment.clone().month(end.month).format(locale.year || \'YYYY\') }}</h4><h4 class="daterangepicker__month">{{ _moment.clone().month(end.month).format(\'MMMM\') }}</h4><table><thead><tr><th ng-repeat="week in weeks">{{ week }}</th></tr></thead><tbody><tr ng-repeat="week in end.days"><td ng-repeat="day in week" ng-class="{ disabled: day.disabled, selected: !day.disabled &amp;&amp; (end.value.month() === end.month) &amp;&amp; (day.value == end.value.format(\'D\')) }" ng-click="onSelectDay(\'end\', day, start.value.format(\'D\'), day.value)">{{ day.value }}</td></tr></tbody></table></div></div></div><button ng-click="applyDate()" class="daterangepicker__apply">{{ applyButtonLabel }}</button></div></div>',
+    template: '<div ng-click="$event.stopPropagation()" class="daterangepicker"><div class="daterangepicker__option"><select ng-model="selectedOption" ng-options="option.label for option in options" ng-change="onChangeSelect()" ng-click="onClickSelect()"></select></div><div ng-show="selectedOption.value === \'custom\'" class="daterangepicker__cutom"><div class="daterangepicker__start"><input ng-if="useBrowserDefault" type="date" ng-model="start.value._d" class="daterangepicker__input"/><input ng-if="!useBrowserDefault" type="text" ng-value="start.value.format(format.date)" ng-click="toggleDropdown(\'start\')" readonly="" class="daterangepicker__input"/><div ng-show="start.show" ng-if="!useBrowserDefault" class="daterangepicker__dropdown"><button ng-click="onChangeMonth(\'start\', -1)" class="daterangepicker__prev">&lt;</button><button ng-click="onChangeMonth(\'start\', 1)" ng-if="start.month &lt; end.month" class="daterangepicker__next">&gt;</button><div class="daterangepicker__calendars"><h4><div class="daterangepicker__year">{{ _moment.clone().month(start.month).format(locale.year || \'YYYY\') }}</div><div class="daterangepicker__month">{{ _moment.clone().month(start.month).format(\'MMMM\') }}</div></h4><table><thead><tr><th ng-repeat="week in weeks">{{ week }}</th></tr></thead><tbody><tr ng-repeat="week in start.days"><td ng-repeat="day in week" ng-class="{ disabled: day.disabled, selected: !day.disabled &amp;&amp; (getMonthValue(start.value) === start.month) &amp;&amp; (day.value == start.value.format(\'D\')) }" ng-click="onSelectDay(\'start\', day, day.value, end.value.format(\'D\'))">{{ day.value }}</td></tr></tbody></table></div></div></div><div ng-bind="format.to" class="daterangepicker__to"></div><div class="daterangepicker__end"><input ng-if="useBrowserDefault" type="date" ng-model="end.value._d" class="daterangepicker__input"/><input ng-if="!useBrowserDefault" type="text" ng-value="end.value.format(format.date)" ng-click="toggleDropdown(\'end\')" readonly="" class="daterangepicker__input"/><div ng-show="end.show" ng-if="!useBrowserDefault" class="daterangepicker__dropdown"><button ng-click="onChangeMonth(\'end\', -1)" ng-if="start.month &lt; end.month" class="daterangepicker__prev">&lt;</button><button ng-click="onChangeMonth(\'end\', 1)" class="daterangepicker__next">&gt;</button><div class="daterangepicker__calendars"><h4 class="daterangepicker__year">{{ _moment.clone().month(end.month).format(locale.year || \'YYYY\') }}</h4><h4 class="daterangepicker__month">{{ _moment.clone().month(end.month).format(\'MMMM\') }}</h4><table><thead><tr><th ng-repeat="week in weeks">{{ week }}</th></tr></thead><tbody><tr ng-repeat="week in end.days"><td ng-repeat="day in week" ng-class="{ disabled: day.disabled, selected: !day.disabled &amp;&amp; (getMonthValue(end.value) === end.month) &amp;&amp; (day.value == end.value.format(\'D\')) }" ng-click="onSelectDay(\'end\', day, start.value.format(\'D\'), day.value)">{{ day.value }}</td></tr></tbody></table></div></div></div><button ng-click="applyDate()" class="daterangepicker__apply">{{ applyButtonLabel }}</button></div></div>',
     scope: {
       useBrowserDefault: '=',
       options: '=',

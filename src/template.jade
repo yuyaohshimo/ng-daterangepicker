@@ -18,7 +18,7 @@
                 th(ng-repeat="week in weeks") {{ week }}
             tbody
               tr(ng-repeat="week in start.days")
-                td(ng-repeat="day in week" ng-class="{ disabled: day.disabled, selected: !day.disabled && (start.value.month() === start.month) && (day.value == start.value.format('D')) }" ng-click="onSelectDay('start', day, day.value, end.value.format('D'))")
+                td(ng-repeat="day in week" ng-class="{ disabled: day.disabled, selected: !day.disabled && (getMonthValue(start.value) === start.month) && (day.value == start.value.format('D')) }" ng-click="onSelectDay('start', day, day.value, end.value.format('D'))")
                   {{ day.value }}
     .daterangepicker__to(ng-bind="format.to")
     .daterangepicker__end
@@ -36,5 +36,5 @@
                 th(ng-repeat="week in weeks") {{ week }}
             tbody
               tr(ng-repeat="week in end.days")
-                td(ng-repeat="day in week" ng-class="{ disabled: day.disabled, selected: !day.disabled && (end.value.month() === end.month) && (day.value == end.value.format('D')) }" ng-click="onSelectDay('end', day, start.value.format('D'), day.value)") {{ day.value }}
+                td(ng-repeat="day in week" ng-class="{ disabled: day.disabled, selected: !day.disabled && (getMonthValue(end.value) === end.month) && (day.value == end.value.format('D')) }" ng-click="onSelectDay('end', day, start.value.format('D'), day.value)") {{ day.value }}
     button.daterangepicker__apply(ng-click="applyDate()") {{ applyButtonLabel }}

@@ -8,7 +8,7 @@
 angular.module('dateRangePicker', [])
 
 .factory('dateRangePickerService', [function() {
-  var getMonth = function(month) {      
+  var getMonth = function(month) {
     var prevDays = moment().month(month).startOf('month').day();
     var presentDays = moment().month(month).endOf('month').date();
     var nextDays = 6 - moment().month(month).endOf('month').day();
@@ -42,9 +42,14 @@ angular.module('dateRangePicker', [])
     return days;
   };
 
-  var isValidDay = function(start, end, startDayValue, endDayValue, type) {          
-    var startMonth = (type === 'start') ? start.month : start.value.month();
-    var endMonth = (type === 'end') ? end.month : end.value.month();
+  var getMonthValue = function(m) {
+    var _m = m.clone().endOf('month');
+    return moment().month() + _m.diff(moment().endOf('month'), 'month');
+  };
+
+  var isValidDay = function(start, end, startDayValue, endDayValue, type) {
+    var startMonth = (type === 'start') ? start.month : this.getMonthValue(start.value);
+    var endMonth = (type === 'end') ? end.month : this.getMonthValue(end.value);
     return moment().clone().month(startMonth).date(startDayValue) <= moment().clone().month(endMonth).date(endDayValue);
   };
 
@@ -77,6 +82,7 @@ angular.module('dateRangePicker', [])
 
   return {
     getMonth: getMonth,
+    getMonthValue: getMonthValue,
     isValidDay: isValidDay,
     getInitialOption: getInitialOption,
     getOppositeType: getOppositeType,
@@ -97,12 +103,12 @@ angular.module('dateRangePicker', [])
   $scope._moment = moment();
   $scope.start = {
     value: $scope.initialRange ? $scope.initialRange.start : moment(),
-    month: $scope.initialRange ? $scope.initialRange.start.month() : moment().month(),
+    month: $scope.initialRange ? dateRangePickerService.getMonthValue($scope.initialRange.start) : moment().month(),
     show: false
   };
   $scope.end = {
     value: $scope.initialRange ? $scope.initialRange.end : moment(),
-    month: $scope.initialRange ? $scope.initialRange.end.month() : moment().month(),
+    month: $scope.initialRange ? dateRangePickerService.getMonthValue($scope.initialRange.end) : moment().month(),
     show: false
   };
   $scope.start.days = dateRangePickerService.getDaysPerWeek(dateRangePickerService.getMonth($scope.start.month));
@@ -124,12 +130,12 @@ angular.module('dateRangePicker', [])
 
     // start
     $scope.start.value = $scope.selectedOption.start;
-    $scope.start.month = $scope.start.value.month();
+    $scope.start.month = dateRangePickerService.getMonthValue($scope.start.value);
     $scope.start.days = dateRangePickerService.getDaysPerWeek(dateRangePickerService.getMonth($scope.start.month));
 
     // end
     $scope.end.value = $scope.selectedOption.end;
-    $scope.end.month = $scope.end.value.month();
+    $scope.end.month = dateRangePickerService.getMonthValue($scope.end.value);
     $scope.end.days = dateRangePickerService.getDaysPerWeek(dateRangePickerService.getMonth($scope.end.month));
 
     $scope.applyDate();
@@ -182,8 +188,12 @@ angular.module('dateRangePicker', [])
   };
 
   $scope.resetMonth = function(type) {
-    $scope[type].month = $scope[type].value.month();
+    $scope[type].month = dateRangePickerService.getMonthValue($scope[type].value);
   };
+
+  $scope.getMonthValue = function(m) {
+    return dateRangePickerService.getMonthValue(m);
+  }
 }])
 
 .directive('dateRangePicker', ['$window', function($window) {
