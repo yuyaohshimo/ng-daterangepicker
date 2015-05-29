@@ -1,6 +1,6 @@
 var fs = require('fs');
 var rimraf = require('rimraf');
-var _ = require('lodash');
+var argv = require('yargs').argv;
 
 var gulp = require('gulp');
 var runSequence = require('run-sequence');
@@ -39,7 +39,7 @@ gulp.task('style', function() {
   .pipe(gulp.dest('./dist/'))
   .pipe(minifyCSS())
   .pipe(rename({
-    suffix: '.min' 
+    suffix: '.min'
   }))
   .pipe(gulp.dest('./dist'));
 });
@@ -56,7 +56,7 @@ gulp.task('script', function() {
     preserveComments: 'some'
   }))
   .pipe(rename({
-    suffix: '.min' 
+    suffix: '.min'
   }))
   .pipe(gulp.dest('./dist'));
 });
@@ -73,7 +73,7 @@ gulp.task('webserver', function() {
 });
 
 gulp.task('protractor', function() {
-  var protractorEnv = _.intersection(_.keys(gulp.env), ['mac', 'windows'])[0] || 'mac';
+  var protractorEnv = argv.os || 'mac';
   var configFile = 'test/e2e/config.' + protractorEnv + '.js';
 
   return gulp

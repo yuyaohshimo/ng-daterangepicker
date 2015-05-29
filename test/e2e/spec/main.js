@@ -8,7 +8,6 @@ describe('ng-daterangepicker main', function() {
   };
 
   beforeEach(function() {
-    browser.navigate().refresh();
     browser.get(browser.baseUrl + '/example');
     browser.waitForAngular();
   });
@@ -18,22 +17,22 @@ describe('ng-daterangepicker main', function() {
   });
 
   it('should select All', function() {
-    $('select option[value="0"]').click();
+    $('select option[label="All"]').click();
     expect($('.selected_option span').getText()).toBe('all');
   });
 
   it('should select Today', function() {
-    $('select option[value="2"]').click();
+    $('select option[label="Today"]').click();
     expect($('.selected_option span').getText()).toBe('today');
   });
 
   it('should select This week', function() {
-    $('select option[value="3"]').click();
+    $('select option[label="This week"]').click();
     expect($('.selected_option span').getText()).toBe('this_week');
   });
 
   it('should select This month', function() {
-    $('select option[value="4"]').click();
+    $('select option[label="This month"]').click();
     expect($('.selected_option span').getText()).toBe('this_month');
   });
 
@@ -65,7 +64,7 @@ describe('ng-daterangepicker main', function() {
     var inputValue = $('.daterangepicker__input').getAttribute('value');
     var toValue = $('.daterangepicker__to').getText();
 
-    $('select option[value="2"]').click();
+    $('select option[label="Today"]').click();
     expect(inputValue).toBe(now);
     expect(toValue).toBe('~');
   });
@@ -120,11 +119,25 @@ describe('ng-daterangepicker main', function() {
 
   it('should start equals end', function() {
 
+    // click start and select 1
     $('.daterangepicker__start .daterangepicker__input').click();
-    $('.daterangepicker__start .daterangepicker__calendars tbody tr td').click();
+    element.all(by.css('.daterangepicker__start .daterangepicker__calendars tbody tr td')).each(function(element, index) {
+      element.getText().then(function (text) {
+        if (text === '1') {
+          element.click();
+        }
+      });
+    });
 
+    // click end and select 1
     $('.daterangepicker__end .daterangepicker__input').click();
-    $('.daterangepicker__end .daterangepicker__calendars tbody tr td').click();
+    element.all(by.css('.daterangepicker__end .daterangepicker__calendars tbody tr td')).each(function(element, index) {
+      element.getText().then(function (text) {
+        if (text === '1') {
+          element.click();
+        }
+      });
+    });
 
     $('.daterangepicker__apply').click();
 
