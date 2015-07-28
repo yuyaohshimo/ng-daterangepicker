@@ -1,6 +1,6 @@
-.daterangepicker(ng-click="$event.stopPropagation()")
+.daterangepicker
   .daterangepicker__option
-    select(ng-model="selectedOption" ng-options="option.label for option in options" ng-change="onChangeSelect()" ng-click="onClickSelect()")
+    select(ng-model="selectedOption" ng-options="option.label for option in options" ng-change="onChangeSelect()")
   .daterangepicker__cutom(ng-show="selectedOption.value === 'custom'")
     .daterangepicker__start
       input.daterangepicker__input(ng-if="useBrowserDefault" type="date" ng-model="start.value._d")

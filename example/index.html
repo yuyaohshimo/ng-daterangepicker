@@ -1,5 +1,6 @@
 <html ng-app="test">
   <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
   <head>
     <script type="text/javascript" src="../bower_components/angular/angular.js"></script>
     <script type="text/javascript" src="../bower_components/moment/moment.js"></script>
@@ -11,13 +12,13 @@
     <input type="checkbox" ng-model="useBrowserDefault"> useBrowserDefault: {{!!useBrowserDefault}}
     <date-range-picker use-browser-default="useBrowserDefault" options="options" initial-range="initialRange" locale="locale" format="format" apply-button-label="applyButtonLabel" apply-date-range="applyDateRange(start, end, option)"></date-range-picker>
     <h4>Range</h4>
-    <p>Start: 
+    <p>Start:
       <span class="start">{{start}}</span>
     </p>
-    <p>End: 
+    <p>End:
     <span class="end">{{end}}</span>
     </p>
-    <p class="selected_option">Selected Option: 
+    <p class="selected_option">Selected Option:
       <span>{{option}}</span>
     </p>
     <script type="text/javascript" src="app.js"></script>

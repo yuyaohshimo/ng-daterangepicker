@@ -116,12 +116,6 @@ angular.module('dateRangePicker', [])
   $scope.selectedOption = dateRangePickerService.getInitialOption($scope.options);
   $scope.weeks = moment.weekdaysShort();
 
-  $scope.onClickSelect = function() {
-    $scope.start.show = $scope.end.show = false;
-    $scope.resetMonth('start');
-    $scope.resetMonth('end');
-  };
-
   $scope.onChangeSelect = function() {
     if ($scope.selectedOption.value === 'custom') { return; }
     if ($scope.selectedOption.value === 'all') {
