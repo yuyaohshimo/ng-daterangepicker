@@ -151,7 +151,10 @@ angular.module('dateRangePicker', [])
     $scope[type].days = dateRangePickerService.getDaysPerWeek(dateRangePickerService.getMonth($scope[type].month));
   };
 
-  $scope.toggleDropdown = function(type) {
+  $scope.toggleDropdown = function($event, type) {
+
+    $event.stopPropagation();
+
     var oppositeType = dateRangePickerService.getOppositeType(type);
     $scope[oppositeType].show = false;
     $scope.resetMonth(oppositeType);
